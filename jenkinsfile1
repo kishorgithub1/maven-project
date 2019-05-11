@@ -1,0 +1,33 @@
+Pipeline{
+	any agent{
+		Stages{
+			stage('SCM checkout'){
+			git'https://github.com/kishorgithub1/maven-project.git'}
+
+			stage('compile source code'){
+				steps{
+					withMaven(maven:'maven'){
+					sh'mvn compile'
+					}}}
+			stage('test source code'){
+				steps{
+					withMaven(maven:'maven'){
+					sh'mvn test'
+					}}}
+
+			stage('create package'){
+				steps{
+					withMaven(maven:'maven'){
+					sh'mvn package'
+					}}}
+
+			stage('install package'){
+				steps{
+					withMaven(maven:'maven'){
+					sh'mvn install'
+					}}}
+			
+				}
+		}
+	}	
+			
