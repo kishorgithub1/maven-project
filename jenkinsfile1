@@ -1,33 +1,40 @@
-pipeline{
-	agent any{
-		stages{
-			stage('SCM checkout'){
-			git'https://github.com/kishorgithub1/maven-project.git'}
+pipeline {
+    agent any
 
-			stage('compile source code'){
-				steps{
-					withMaven(maven:'maven'){
-					sh'mvn compile'
-					}}}
-			stage('test source code'){
-				steps{
-					withMaven(maven:'maven'){
-					sh'mvn test'
-					}}}
 
-			stage('create package'){
-				steps{
-					withMaven(maven:'maven'){
-					sh'mvn package'
-					}}}
+    stages {
+        stage('SCM Checkout'){
+          git 'https://github.com/prakashk0301/maven-project'
+        }
+  }
+    {
+        stage ('Compile Stage') {
 
-			stage('install package'){
-				steps{
-					withMaven(maven:'maven'){
-					sh'mvn install'
-					}}}
-			
-				}
-		}
-	}	
-			
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn clean compile'
+                }
+            }
+        }
+
+        stage ('Testing Stage') {
+
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn test'
+                }
+            }
+        }
+
+
+        stage ('install Stage') {
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn install'
+                }
+            }
+        }
+
+         
+}
+}
