@@ -7,12 +7,12 @@ pipeline {
           git 'https://github.com/kishorgithub1/maven-project.git'
         }
   }
-    {
+    
         stage('create package before sonarqube'){
         steps{
-              withSonarQubeEnv(My sonar){
-    
-              sh 'sonar'
+              withSonarQubeEnv('sonar'){
+                  withMaven(maven : 'maven'){
+              sh 'clean package sonar: sonar'
               }
              }
             }
