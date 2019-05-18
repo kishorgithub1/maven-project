@@ -34,7 +34,14 @@ pipeline {
                 }
             }
         }
-
-     
+        stage('sonar'){
+            steps{
+                withMaven(maven : 'maven') {
+                withSonarQubeEnv('My SonarQube Server') {
+                sh 'clean install sonar:sonar'
+                   } 
+                   }
+            }
+           }
 }
 }
